@@ -1,0 +1,32 @@
+# from other starters
+
+w[mnpcod]
+*.log
+*.tmp
+*.tmp.*
+log.txt
+*.sublime-project
+*.sublime-workspace
+
+/.idea/
+/.sass-cache/
+/.versions/
+/coverage/
+/tmp/
+/temp/
+
+$RECYCLE.BIN/
+.DS_Store
+Thumbs.db
+UserInterfaceState.xcuserstate
+
+# from universal-starter
+
+/__build__
+/__server_build__
+/node_modules
+/typings
+/tsd_typings/
+npm-debug.log
+
+/dist/
