@@ -49,8 +49,8 @@
     "gulp": "^3.9.1",
     "gulp-cli": "^1.2.1",
     "gulp-load-plugins": "^1.2.0",
+    "gulp-nodemon": "^2.0.6",
     "gulp-util": "^3.0.7",
-    "nodemon": "^1.9.1",
     "webpack": "^1.12.14",
     "webpack-merge": "^0.8.3",
     "webpack-stream": "^3.1.0"

@@ -27,9 +27,9 @@ var clientConfig = {
   devtool: 'cheap-module-source-map',
   debug: true,
   target: 'web',
-  entry: './src/client',
+  entry: './client',
   output: {
-    path: path.join(__dirname, 'dist', 'client')
+    path: path.join(__dirname, '.tmp', 'client')
   }
 };
 
@@ -43,15 +43,12 @@ var defaultConfig = {
   },
   context: __dirname,
   resolve: {
-    root: path.join(__dirname, '/src')
+    root: path.join(__dirname, 'client')
   },
   output: {
     publicPath: path.resolve(__dirname),
     filename: 'bundle.js'
   }
 };
-
-
-
 
 module.exports = webpackMerge({}, defaultConfig, commonConfig, clientConfig);

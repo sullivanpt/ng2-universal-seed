@@ -12,6 +12,7 @@ log.txt
 /.sass-cache/
 /.versions/
 /coverage/
+/.tmp/
 /tmp/
 /temp/
 

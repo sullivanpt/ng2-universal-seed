@@ -23,7 +23,7 @@ ng2Core.enableProdMode();
 
 // Angular 2 Express View Engine
 app.engine('.html', ng2Universal.expressEngine);
-app.set('views', path.join(config.root, 'src/client'));
+app.set('views', path.join(config.root, 'client'));
 app.set('view engine', 'html');
 
 // Angular 2 'App' route handler
@@ -43,7 +43,7 @@ function ngApp(req, res) {
 }
 
 // Serve static files
-app.use(express.static(path.join(config.root, 'dist')));
+app.use(express.static(path.join(config.root, '.tmp')));
 
 // Routes
 app.use(ngApp);

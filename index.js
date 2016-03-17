@@ -5,4 +5,4 @@
 // for now we just stick to require() instead of import. it's MUCH faster than babel
 // require('babel-register');
 
-require('./src/server');
+require('./server');
