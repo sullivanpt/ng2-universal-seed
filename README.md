@@ -20,9 +20,9 @@ See https://github.com/angular/angular/issues/7601
 
 ## Caveats
 
-* server JS renders, but the client JS crashes with a 'undefined' Token when
+* SYSTEMJS (systemjs branch): server and client render, but preboot must be disabled.
+* WEBPACK (master branch): server JS renders, but the client JS crashes with a 'undefined' Token when
 instantiating providers.
-* server files are watched via nodemon, but webpack watch isn't set up yet.
 * there's no production build
 
 ## License
