@@ -14,6 +14,7 @@ const config = require('./environment');
 
 // Application
 const App = require('../client/app/app');
+const ServerOnlyApp = require('../client/server-only-app/server-only-app');
 // import {Title, ServerOnlyApp} from './server-only-app/server-only-app';
 
 const app = express();
@@ -31,14 +32,14 @@ function ngApp(req, res) {
   let baseUrl = '/';
   let url = req.originalUrl || '/';
   res.render('index', {
-    directives: [App], // [App, Title, ServerOnlyApp],
+    directives: [App, ServerOnlyApp], // [App, Title],
     providers: [
       ng2Core.provide(ng2Router.APP_BASE_HREF, { useValue: baseUrl }),
       ng2Core.provide(ng2Universal.REQUEST_URL, { useValue: url }),
       ng2Router.ROUTER_PROVIDERS,
       ng2Universal.NODE_LOCATION_PROVIDERS,
     ],
-    preboot: true
+    preboot: false // TODO: figure out why turning on bootsrap kills client app
   });
 }
 

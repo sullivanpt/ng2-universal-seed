@@ -1,8 +1,6 @@
-'use strict';
-
 const ng2Core = require('angular2/core');
 
-const AppComponent = ng2Core
+module.exports = ng2Core
   .Component({
     selector: 'app',
     template: `
@@ -17,6 +15,4 @@ const AppComponent = ng2Core
       this.name = 'nobody';
     }
   });
-
-module.exports = AppComponent;
 
