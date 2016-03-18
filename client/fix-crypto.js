@@ -1,0 +1,1 @@
+module.exports = false; // fix incorrect node detection in "/node_modules/angular2/bundles/angular2-polyfills.js"

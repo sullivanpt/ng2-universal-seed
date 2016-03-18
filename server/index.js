@@ -44,9 +44,11 @@ function ngApp(req, res) {
 
 // Serve static files
 app.use(express.static(path.join(config.root, '.tmp')));
+app.use('/node_modules', express.static(path.join(config.root, 'node_modules')));
+app.use('/client', express.static(path.join(config.root, 'client')));
 
 // Routes
-app.use(ngApp);
+app.get('/', ngApp);
 
 // Start the server by listening on a port
 app.listen(config.port, function() {

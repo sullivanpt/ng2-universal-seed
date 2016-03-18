@@ -19,7 +19,7 @@ gulp.task('watch', () => { // TODO: use http://webpack.github.io/docs/webpack-de
   return gulp.watch('client/**/*', ['webpack']);
 });
 
-gulp.task('serve', [ 'webpack' ], () => {
+gulp.task('serve', () => {
   process.env.NODE_ENV = process.env.NODE_ENV || 'development';
   plugins.nodemon({
     verbose: true,
@@ -32,4 +32,4 @@ gulp.task('serve', [ 'webpack' ], () => {
     });
 });
 
-gulp.task('default', ['watch', 'serve']);
+gulp.task('default', [ 'serve' ]);

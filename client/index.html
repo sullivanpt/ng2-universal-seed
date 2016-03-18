@@ -18,6 +18,55 @@
       Server Only App Loading...
     </server-only-app>
 
-    <script async src="client/bundle.js"></script>
-  </body>
+  <!-- ES6-related imports -->
+  <script src="/node_modules/es6-shim/es6-shim.js"></script>
+  <script src="/node_modules/systemjs/dist/system-polyfills.js"></script>
+  <script src="/node_modules/angular2/bundles/angular2-polyfills.js"></script>
+  <script src="/node_modules/systemjs/dist/system.js"></script>
+  <script src="/node_modules/angular2/bundles/angular2.dev.js"></script>
+  <script src="/node_modules/angular2/bundles/http.js"></script>
+  <script src="/node_modules/angular2/bundles/router.js"></script>
+  <script src="/node_modules/rxjs/bundles/Rx.js"></script>
+
+  <!-- <script src="/client/system.config.js"></script> -->
+
+  <script>
+    System.config({
+      defaultJSExtensions: true,
+      map: {
+        'es6-shim': '/node_modules/es6-shim/es6-shim.js',
+        'angular2-universal-preview/polyfills': '/node_modules/angular2/bundles/angular2-polyfills.js',
+        'angular2': '/node_modules/angular2/bundles/angular2.dev.js',
+        'angular2/core': '/node_modules/angular2/bundles/angular2.dev.js',
+        'angular2/platform/browser': '/node_modules/angular2/bundles/angular2.dev.js',
+        'rxjs': '/node_modules/rxjs/bundles/Rx.js',
+        'angular2-universal-preview':  '/node_modules/angular2/bundles/angular2.dev.js', // wrong
+        'es6-promise': '/node_modules/es6-promise/dist/es6-promise.js',
+        'reflect-metadata': '/node_modules/reflect-metadata/Reflect.js',
+        'zone.js/dist/zone-microtask': '/node_modules/zone.js/dist/zone-microtask',
+        'crypto' : 'client/fix-crypto.js' // This is for fixing problem of "isNode" in ng2
+      }
+    });
+
+    // this is for debugging renegade require satements
+    /*
+    var systemNormalize = System.normalize;
+    System.normalize = function (name, parentName, parentAddress) {
+      return systemNormalize.call(this, name, parentName, parentAddress)
+      .then(function (normalized) {
+        console.log("normalize: " + JSON.stringify({
+          name: name,
+          parentName: parentName,
+          parentAddress: parentAddress,
+          normalized: normalized
+        }));
+        return normalized;
+      });
+    }
+    */
+
+    System.import('/client/index.js');
+  </script>
+
+</body>
 </html>
