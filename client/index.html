@@ -25,7 +25,7 @@
 
     <script src="/node_modules/angular2/bundles/angular2-polyfills.js"></script>
 
-    <script src="/node_modules/systemjs/dist/system.js"></script>
+    <script src="/node_modules/systemjs/dist/system.src.js"></script>
 
     <script src="/node_modules/rxjs/bundles/Rx.js"></script>
     <script src="/node_modules/angular2/bundles/angular2.js"></script>
@@ -33,6 +33,15 @@
     <script src="/node_modules/angular2/bundles/router.js"></script>
 
     <script>
+
+      System.config({
+        map: { // mock up a SystemJS package so we can access require('angular2-universal-preview').prebootComplete
+          'angular2-universal-preview': '/node_modules/angular2-universal-preview/dist/browser/bootstrap.js'
+        },
+        packages: { // this is the "new" way of writing "defaultJSExtensions: true" but not applying it to node_modules
+          'client': { defaultExtension: 'js' },
+        }
+      });
 
       // this is for debugging renegade require satements
       /*
@@ -51,7 +60,7 @@
       }
       */
 
-      System.import('/client/index.js');
+      System.import('/client/index');
 
     </script>
 

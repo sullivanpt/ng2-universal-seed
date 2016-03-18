@@ -15,7 +15,7 @@ const config = require('./environment');
 // Application
 const App = require('../client/app/app');
 const ServerOnlyApp = require('../client/server-only-app/server-only-app');
-// import {Title, ServerOnlyApp} from './server-only-app/server-only-app';
+// TODO: for better SEO. import {Title} from './server-only-app/server-only-app';
 
 const app = express();
 
@@ -39,7 +39,7 @@ function ngApp(req, res) {
       ng2Router.ROUTER_PROVIDERS,
       ng2Universal.NODE_LOCATION_PROVIDERS,
     ],
-    preboot: false // TODO: figure out why turning on bootsrap kills client app
+    preboot: true // note: when true client angular2 app will not start until prebootComplete is called
   });
 }
 
@@ -49,7 +49,8 @@ app.use('/node_modules', express.static(path.join(config.root, 'node_modules')))
 app.use('/client', express.static(path.join(config.root, 'client')));
 
 // Routes
-app.get('/', ngApp);
+// TODO: only recognize ng2Router paths and pass the rest through so express will 404 them
+app.use('/:url(|home|about)', ngApp);
 
 // Start the server by listening on a port
 app.listen(config.port, function() {
