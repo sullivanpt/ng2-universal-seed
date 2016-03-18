@@ -11,6 +11,9 @@ Goals:
 
 * `npm install`
 
+You will get a peerDependency warning for es-shim. Be sure you are using 0.35.0.
+See https://github.com/angular/angular/issues/7601
+
 ## Serve
 
 * `gulp serve` to build your client app and start a web server

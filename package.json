@@ -23,7 +23,7 @@
     "babel-register": "^6.7.2",
     "css": "^2.2.1",
     "es6-promise": "^3.1.2",
-    "es6-shim": "^0.33.3",
+    "es6-shim": "^0.35.0",
     "express": "^4.13.4",
     "gulp-insert": "^0.5.0",
     "gulp-rename": "^1.2.2",
