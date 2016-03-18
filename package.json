@@ -15,7 +15,7 @@
   "author": "Patrick Sullivan",
   "license": "MIT",
   "dependencies": {
-    "angular2": "^2.0.0-beta.9",
+    "angular2": "2.0.0-beta.9",
     "angular2-express-engine": "^0.5.5",
     "angular2-hapi-engine": "^0.5.2",
     "angular2-universal-preview": "^0.70.8",

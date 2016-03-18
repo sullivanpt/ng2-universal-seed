@@ -14,7 +14,8 @@ const config = require('./environment');
 
 // Application
 const App = require('../client/app/app');
-// import {Title, ServerOnlyApp} from './server-only-app/server-only-app';
+const ServerOnlyApp = require('../client/server-only-app/server-only-app');
+// TODO: for better SEO. import {Title} from './server-only-app/server-only-app';
 
 const app = express();
 
@@ -31,22 +32,25 @@ function ngApp(req, res) {
   let baseUrl = '/';
   let url = req.originalUrl || '/';
   res.render('index', {
-    directives: [App], // [App, Title, ServerOnlyApp],
+    directives: [App, ServerOnlyApp], // [App, Title],
     providers: [
       ng2Core.provide(ng2Router.APP_BASE_HREF, { useValue: baseUrl }),
       ng2Core.provide(ng2Universal.REQUEST_URL, { useValue: url }),
       ng2Router.ROUTER_PROVIDERS,
       ng2Universal.NODE_LOCATION_PROVIDERS,
     ],
-    preboot: true
+    preboot: true // note: when true client angular2 app will not start until prebootComplete is called
   });
 }
 
-// Serve static files
+// Serve static files (only the '.tmp' is really needed for webpack client)
 app.use(express.static(path.join(config.root, '.tmp')));
+app.use('/node_modules', express.static(path.join(config.root, 'node_modules')));
+app.use('/client', express.static(path.join(config.root, 'client')));
 
 // Routes
-app.use(ngApp);
+// TODO: only recognize ng2Router paths and pass the rest through so express will 404 them
+app.use('/:url(|home|about)', ngApp);
 
 // Start the server by listening on a port
 app.listen(config.port, function() {
