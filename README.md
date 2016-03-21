@@ -8,6 +8,12 @@ Goals:
   but also cause the most debugging pain when transpiled)
 * use webpack/babel for client transpiling
 
+## Notable Branches
+
+* master - a messy hodgepodge of features currently using webpack
+* webpack - demonstrates minimal angular2 universal with webpack
+* systemjs - demonstrates minimal angular2 universal with systemjs
+
 ## Installation
 
 * `npm install`
@@ -25,7 +31,7 @@ Notes:
 For fun:
 * browse to http://localhost:9000 to see the server rendered app
 * browse to http://localhost:9000/about/nested to deep link into server rendered app
-* browse to http://localhost:9000/client/index.html to load static html and bypass server rendering
+* browse to http://localhost:9000/public/index.html to load static html and bypass server rendering
 * browse to http://localhost:9000/invalid to verify server returns 404 for unknown resources
 
 ## Caveats
@@ -35,4 +41,4 @@ For fun:
 
 ## License
 
-MIT
+available under MIT. See LICENSE for more details.

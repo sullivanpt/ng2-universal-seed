@@ -1,3 +1,5 @@
+'use strict';
+
 const ng2Core = require('angular2/core');
 const ng2Router = require('angular2/router');
 

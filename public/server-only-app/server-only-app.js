@@ -1,3 +1,5 @@
+'use strict';
+
 const ng2Core = require('angular2/core');
 
 module.exports = ng2Core

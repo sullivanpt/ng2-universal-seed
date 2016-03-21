@@ -1,3 +1,5 @@
+'use strict';
+
 var webpackMerge = require('webpack-merge');
 var webpack = require('webpack');
 var path = require('path');
@@ -7,7 +9,7 @@ var commonConfig = {
     extensions: ['', '.js']
   },
   module: {
-    loaders: [
+    loaders: [ // bottom to top order
       {
         test: /\.js$/,
         exclude: /node_modules/,
@@ -27,9 +29,9 @@ var clientConfig = {
   devtool: 'cheap-module-source-map',
   debug: true,
   target: 'web',
-  entry: './client',
+  entry: './public',
   output: {
-    path: path.join(__dirname, '.tmp', 'client')
+    path: path.join(__dirname, '.tmp', 'public')
   }
 };
 
@@ -43,7 +45,7 @@ var defaultConfig = {
   },
   context: __dirname,
   resolve: {
-    root: path.join(__dirname, 'client')
+    root: path.join(__dirname, 'public')
   },
   output: {
     publicPath: path.resolve(__dirname),

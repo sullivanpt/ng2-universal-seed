@@ -1,3 +1,8 @@
+/**
+ * This is the browser main entry point to the client side application (never used by nodejs)
+ */
+'use strict';
+
 // TODO: do we need these?
 require('angular2-universal-preview/polyfills'); // TODO: contrast with angular2/polyfills
 

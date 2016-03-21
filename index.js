@@ -1,3 +1,5 @@
+'use strict';
+
 // Use babel primarily to process import statements
 // TODO: is node babel in production really a good idea?
 // maybe harmony flag or node 5+ would be better and more efficient
