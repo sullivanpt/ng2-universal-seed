@@ -1,12 +1,18 @@
 # Messing around with Angular 2 Universal Starter and ES2015
 
-A minimal Angular 2 starter for Universal JavaScript using SystemJS
+A minimal Angular 2 starter for Universal JavaScript using webpack
 Goals:
 * use Angular2
 * use universal/isomorphic JS
 * use minimal or no server transpiling (es6 imports are most noticeable loss,
   but also cause the most debugging pain when transpiled)
-* use minimal or no client transpiling (beyond angular2 required shims)
+* use webpack/babel for client transpiling
+
+## Notable Branches
+
+* master - a messy hodgepodge of features currently using webpack
+* webpack - demonstrates minimal angular2 universal with webpack
+* systemjs - demonstrates minimal angular2 universal with systemjs
 
 ## Installation
 
@@ -25,7 +31,7 @@ Notes:
 For fun:
 * browse to http://localhost:9000 to see the server rendered app
 * browse to http://localhost:9000/about/nested to deep link into server rendered app
-* browse to http://localhost:9000/client/index.html to load static html and bypass server rendering
+* browse to http://localhost:9000/public/index.html to load static html and bypass server rendering
 * browse to http://localhost:9000/invalid to verify server returns 404 for unknown resources
 
 ## Caveats
@@ -35,4 +41,4 @@ For fun:
 
 ## License
 
-MIT
+available under MIT. See LICENSE for more details.
