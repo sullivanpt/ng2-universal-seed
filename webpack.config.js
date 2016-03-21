@@ -29,7 +29,7 @@ var clientConfig = {
   devtool: 'cheap-module-source-map',
   debug: true,
   target: 'web',
-  entry: './public',
+  entry: './public/client-entry.js',
   output: {
     path: path.join(__dirname, '.tmp', 'public')
   }

@@ -48,9 +48,6 @@ gulp.task('test', function() {
     // gulp-mocha needs filepaths so you can't have any plugins before it
     .pipe(plugins.mocha({ /* reporter: 'nyan' */ }));
   result // Work around hung test. See https://github.com/sindresorhus/gulp-mocha/issues/118
-    .once('error', () => {
-      process.exit(1);
-    })
     .once('end', () => {
       process.exit();
     });
@@ -58,7 +55,7 @@ gulp.task('test', function() {
 });
 
 gulp.task('webpack', ['clean', 'lint'], () => { // TODO: we don't really want to clean every time
-  return gulp.src('public/index.js')
+  return gulp.src('public/client-entry.js')
     .pipe(webpack(require('./webpack.config.js')))
     .pipe(gulp.dest('.tmp/public'));
 });

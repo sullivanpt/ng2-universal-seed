@@ -1,10 +1,8 @@
 'use strict';
 
+const serverMock = require('../../../test/common/server.mock');
 const should = require('should');
 const session = require('./session');
-
-const app = require('../../index');
-const request = require('supertest');
 
 describe('session', function() {
   describe('urlInsertSessionId', function() {
@@ -22,7 +20,7 @@ describe('session', function() {
   });
 
   describe('session tracking', function() {
-    var agent = request.agent(app); // this instance keeps the cookie
+    var agent = serverMock.newAgent(); // this instance keeps the cookie
     var sessionId;
 
     it('should set session cookie on authorize', function authorize(done) { // note: we bypass /api/initialize
@@ -38,7 +36,7 @@ describe('session', function() {
     });
 
     it('should not allow access to a protected API with no session ID', function(done) {
-      request.agent(app) // new instance has no cookie
+      serverMock.newAgent() // new instance has no cookie
         .get('/api/test/isauthorized')
         .expect(401, done);
     });
@@ -50,14 +48,14 @@ describe('session', function() {
     });
 
     it('should allow access to a protected API by passing the session ID in the Authorize header', function(done) {
-      request.agent(app) // new instance has no cookie
+      serverMock.newAgent() // new instance has no cookie
         .get('/api/test/isauthorized')
         .set('Authorization', 'Bearer ' + sessionId)
         .expect(200, done);
     });
 
     it('should allow access to a protected API by passing the session ID in the URL path', function(done) {
-      request.agent(app) // new instance has no cookie
+      serverMock.newAgent() // new instance has no cookie
         .get('/api/test/isauthorized/session/' + sessionId)
         .expect(200, done);
     });
