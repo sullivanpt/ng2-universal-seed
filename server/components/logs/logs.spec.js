@@ -1,39 +1,38 @@
 'use strict';
 
-const should = require('should'); // TODO: prefer expect semantics
-const logs = require('./logs');
 const _ = require('lodash');
+const logs = require('./logs');
 
 describe('logs', function() {
   describe('log ID generator', function() {
     it('should create random strings of length 5', function() {
-      logs.generateLogId().length.should.equal(5);
+      expect(logs.generateLogId().length).toBe(5);
     });
 
     it('should should rarely repeat', function() {
       var samples = _.times(100, logs.generateLogId);
       var unique = _.uniq(samples);
-      samples.length.should.be.below(unique.length + 3); // allow 3 of 100 dups
+      expect(samples.length).toBeLessThan(unique.length + 3); // allow 3 of 100 dups
     });
   });
 
   describe('log filter', function() {
     it('should pass non-object and non-arrays through unchanged', function() {
-      should(logs.filter()).be.undefined;
-      should(logs.filter(null)).be.null;
-      logs.filter(5).should.equal(5);
-      logs.filter('text').should.equal('text');
+      expect(logs.filter()).toBeUndefined();
+      expect(logs.filter(null)).toBeNull();
+      expect(logs.filter(5)).toBe(5);
+      expect(logs.filter('text')).toBe('text');
     });
 
     it('should deeply filter objects and arrays', function() {
-      logs.filter({
+      expect(logs.filter({
         key1: [
           {
             firstName: 'not a secret',
             password: 'secret'
           }
         ]
-      }).should.eql({
+      })).toEqual({
         key1: [
           {
             firstName: 'not a secret',
@@ -51,7 +50,7 @@ describe('logs', function() {
           var dst = {};
           src[key] = 'value';
           dst[key] = '<redacted>';
-          logs.filter(src).should.eql(dst);
+          expect(logs.filter(src)).toEqual(dst);
         });
     });
   });
@@ -59,16 +58,16 @@ describe('logs', function() {
   describe('logger', function() {
     it('should expose debug, info, fatal etc.', function() {
       var logger = logs.getLogger('testCat');
-      logger.debug.should.be.a.function;
-      logger.info.should.be.a.function;
-      logger.fatal.should.be.a.function;
+      expect(_.isFunction(logger.debug)).toBeTruthy();
+      expect(_.isFunction(logger.info)).toBeTruthy();
+      expect(_.isFunction(logger.fatal)).toBeTruthy();
     });
 
     it('should expose id setter which exposes debug, info, fatal etc.', function() {
       var logger = logs.getLogger('testCat').id('myid');
-      logger.debug.should.be.a.function;
-      logger.info.should.be.a.function;
-      logger.fatal.should.be.a.function;
+      expect(_.isFunction(logger.debug)).toBeTruthy();
+      expect(_.isFunction(logger.info)).toBeTruthy();
+      expect(_.isFunction(logger.fatal)).toBeTruthy();
     });
   });
 });

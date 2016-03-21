@@ -42,17 +42,20 @@ gulp.task('lint', function() { // webpack eslint-loader wouldn't get full covera
     .pipe(plugins.eslint.failAfterError());
 });
 
+// TODO: consider karma for client side JS testing. Not sure we need it as server tests provide universal coverage
+// See https://github.com/karma-runner/gulp-karma
+// And https://github.com/AngularClass/angular2-webpack-starter/blob/master/config/spec-bundle.js
+
 gulp.task('test', function() {
   process.env.NODE_ENV = 'test';
-  var result = gulp.src(['**/*.spec.js', '!node_modules/**'], { read: false })
-    // gulp-mocha needs filepaths so you can't have any plugins before it
-    .pipe(plugins.mocha({ /* reporter: 'nyan' */ }));
-  result // Work around hung test. See https://github.com/sindresorhus/gulp-mocha/issues/118
-    .once('end', () => {
-      process.exit();
-    });
-  return result;
+  return gulp.src(['**/*.spec.js', '!node_modules/**'])
+    // gulp-jasmine needs filepaths so you can't have any plugins before it
+    .pipe(plugins.jasmine({ verbose: true, captureExceptions: true }))
+    .pipe(plugins.exit()); // See https://github.com/sindresorhus/gulp-jasmine/issues/49
 });
+
+// TODO: 'gulp-protractor' on spec/e2e folder
+// See https://github.com/angular-fullstack/generator-angular-fullstack/blob/master/app/templates/gulpfile.babel(gulp).js
 
 gulp.task('webpack', ['clean', 'lint'], () => { // TODO: we don't really want to clean every time
   return gulp.src('public/client-entry.js')
@@ -65,7 +68,7 @@ gulp.task('watch', ['version'], () => { // TODO: use http://webpack.github.io/do
 });
 
 gulp.task('serve', ['webpack', 'lint'], () => {
-  process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+  process.env.NODE_ENV = process.env.NODE_ENV || 'development'; // TODO: 'gulp-env' see https://github.com/angular-fullstack/generator-angular-fullstack/blob/master/app/templates/gulpfile.babel(gulp).js
   plugins.nodemon({
     verbose: true,
     watch: ['public', 'server'],
@@ -77,4 +80,4 @@ gulp.task('serve', ['webpack', 'lint'], () => {
     });
 });
 
-gulp.task('default', ['nsp', 'watch', 'serve']);
+gulp.task('default', ['nsp', 'watch', 'serve']); // TODO: gulp4.series or 'run-sequence' so clean only happens once

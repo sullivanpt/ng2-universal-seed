@@ -1,21 +1,20 @@
 'use strict';
 
-const serverMock = require('../../../test/common/server.mock');
-const should = require('should');
+const serverMock = require('../../../spec/helpers/server.mock');
 const session = require('./session');
 
 describe('session', function() {
   describe('urlInsertSessionId', function() {
     var testUrl = 'scheme://host:port/root/path?query=value';
     it('should not alter the URL if leakSessionId is false', function() {
-      session.urlInsertSessionId({ sessionID: '123' }, testUrl).should.equal(testUrl);
-      session.urlInsertSessionId({ sessionID: '123', session: {} }, testUrl).should.equal(testUrl);
-      session.urlInsertSessionId({ sessionID: '123', session: { payload: { cookie: true } } }, testUrl).should.equal(testUrl);
+      expect(session.urlInsertSessionId({ sessionID: '123' }, testUrl)).toBe(testUrl);
+      expect(session.urlInsertSessionId({ sessionID: '123', session: {} }, testUrl)).toBe(testUrl);
+      expect(session.urlInsertSessionId({ sessionID: '123', session: { payload: { cookie: true } } }, testUrl)).toBe(testUrl);
     });
     it('should append the session ID to the URL if leakSessionId is true', function() {
       var sessionUrl = testUrl.replace('/path', '/path/session/123');
-      session.urlInsertSessionId({ sessionID: '123', session: { payload: {} } }, testUrl).should.equal(sessionUrl);
-      session.urlInsertSessionId({ sessionID: '123', session: { payload: { cookie: false } } }, testUrl).should.equal(sessionUrl);
+      expect(session.urlInsertSessionId({ sessionID: '123', session: { payload: {} } }, testUrl)).toBe(sessionUrl);
+      expect(session.urlInsertSessionId({ sessionID: '123', session: { payload: { cookie: false } } }, testUrl)).toBe(sessionUrl);
     });
   });
 
@@ -28,9 +27,9 @@ describe('session', function() {
         .get('/api/test/authorize') // TODO: put login API here
         .expect(200)
         .expect('set-cookie', /express.sess=.*/, function(err, res) {
-          should.not.exist(err);
+          expect(err).toBeFalsy();
           sessionId = /"sessionId":"([^"]*)"/.exec(res.text)[1];
-          sessionId.should.exist;
+          expect(sessionId).toBeTruthy();
           done();
         });
     });
