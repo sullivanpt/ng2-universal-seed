@@ -4,7 +4,7 @@
 'use strict';
 
 // TODO: do we need these?
-require('angular2-universal-preview/polyfills'); // TODO: contrast with angular2/polyfills
+require('angular2/bundles/angular2-polyfills'); // TODO: contrast with 'angular2-universal-polyfills'
 
 const ng2Universal = require('angular2-universal-preview');
 const ng2PlatformBrowser = require('angular2/platform/browser');
