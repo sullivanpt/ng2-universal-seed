@@ -7,22 +7,18 @@ Goals:
 * use minimal or no server transpiling (es6 imports are most noticeable loss,
   but also cause the most debugging pain when transpiled)
 * use webpack/babel for client transpiling
+* jasmine for server, client, and e2e
+* eslint enforcing code quality and style
 
 ## Notable Branches
 
 * master - a messy hodgepodge of features currently using webpack
-* webpack - demonstrates minimal angular2 universal with webpack
-* systemjs - demonstrates minimal angular2 universal with systemjs
+* webpack - (stale: beta.9) demonstrates minimal angular2 universal with webpack
+* systemjs - (stale: beta.9) demonstrates minimal angular2 universal with systemjs
 
 ## Installation
 
 * `npm install`
-
-Notes:
-* es6-shim@0.35.0 fixes the Chrome crash but gives a peerDependency warning for angular2 beta 9 and 10.
-* angular2 beta 10 doesn't work with angular2-universal yet
-* reflect-metadata, zone.js seem to break angular2 if updated to latest
-* parse5 seems to break angular2-universal if updated to latest
 
 ## Serve
 

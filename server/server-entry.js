@@ -19,6 +19,9 @@ app.use('/api', require('./api'));
 // register "page" routes, i.e. angular2 universal view engine
 require('./components/universal')(app);
 
+// All other routes return a 404. to make debugging easier (node already has a 404, we convert it)
+app.use(require('./components/errors').sendError(404));
+
 // Error handling must be the last the express route
 app.use(require('./components/errors').handleError);
 

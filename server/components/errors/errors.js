@@ -8,6 +8,8 @@ var logger = require('../logs').getLogger('errors');
 var config = require('../../environment');
 
 var _ = require('lodash');
+var fs = require('fs');
+var path = require('path');
 var accepts = require('accepts');
 
 /**
@@ -61,15 +63,34 @@ function sendError(statusCode, msg) {
 exports.sendError = sendError;
 
 /**
+ * Helper to lookup title and description for an HTTP status
+ *
+ * TODO: apply i18n solution here
+ */
+const statusMap = {
+  400: { title: 'Bad request', description: 'Sorry, but the request was malformed and the page cannot be displayed.' },
+  401: { title: 'Unauthorized', description: 'Sorry, but the page you were trying to view requires authentication.' },
+  403: { title: 'Forbidden', description: 'Sorry, but you need permission to view that page.' },
+  404: { title: 'Not found', description: 'Sorry, but the page you were trying to view does not exist.' },
+  500: { title: 'Server error', description: 'Sorry, but an unexpected error occurred and the page cannot be displayed.' }
+};
+
+/**
+ * Compile a lodash template for the error page
+ * We could have used angular2 universal as the template engine, but it feels like putting the cart before the horse.
+ * We could use jade, ejs, dust, etc., but we already had lodash loaded.
+ */
+const compiledTemplate = _.template(fs.readFileSync(path.join(config.root, 'public/error.html')));
+
+/**
  * Express route middleware to capture HandledError and render them nicely to the user
  */
 function handleError(err, req, res, next) {
   if (!(err instanceof HandledError)) { // not our error
     return next(err);
   }
-  if ([
-    400, 401, 403, 404, 500
-  ].indexOf(err.status) === -1) { // not an error we have a template for, so we shouldn't handle it
+  const mapped = statusMap[err.status];
+  if (!mapped) { // not an error we have a template for, so we shouldn't handle it
     return next(err);
   }
 
@@ -86,15 +107,12 @@ function handleError(err, req, res, next) {
   if (accepts(req).type('json', 'html') === 'json') {
     return res.status(result.status).json(result);
   }
-  res.render(err.status + '', {
-    appConfigVersionRevision: (config.appConfig.version || {}).revision,
-    errorMessage: err.message || undefined
-  }, function (err, html) {
-    if (err) {
-      return res.status(result.status).json(result);
-    }
 
-    res.send(html);
-  });
+  res.send(compiledTemplate({
+    appConfigVersionRevision: (config.appConfig.version || {}).revision,
+    errorMessage: err.message || undefined,
+    errorTitle: mapped.title,
+    errorDescription: mapped.description
+  }));
 }
 exports.handleError = handleError;
