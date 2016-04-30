@@ -3,16 +3,18 @@
  */
 'use strict';
 
-// TODO: do we need these?
-require('angular2/bundles/angular2-polyfills'); // TODO: contrast with 'angular2-universal-polyfills'
-
-const ng2Universal = require('angular2-universal-preview');
+// Angular 2
+require('angular2-universal/polyfills');
+const ng2Universal = require('angular2-universal');
 const ng2PlatformBrowser = require('angular2/platform/browser');
-const ng2Router = require('angular2/router');
 
+// Application
 const AppComponent = require('./app/app');
 
+// ng2Universal.enableProdMode(); // TODO: when do we need to enable this?
+
 ng2PlatformBrowser.bootstrap(AppComponent, [
-  ...ng2Router.ROUTER_PROVIDERS
-])
-  .then(ng2Universal.prebootComplete);
+  ...ng2Universal.BROWSER_ROUTER_PROVIDERS,
+  ...ng2Universal.BROWSER_HTTP_PROVIDERS,
+]);
+//  .then(ng2Universal.prebootComplete); TODO: verify this isn't needed anymore

@@ -8,10 +8,9 @@ const publicRoot = path.join(config.root, 'public');
 const auth = require('../auth');
 
 // Angular 2
-require('angular2-universal-preview/polyfills');
-const ng2Universal = require('angular2-universal-preview');
+require('angular2-universal/polyfills');
+const ng2Universal = require('angular2-universal');
 const ng2Core = require('angular2/core');
-const ng2Router = require('angular2/router');
 
 // Application
 const App = require(path.join(publicRoot, 'app/app'));
@@ -41,14 +40,19 @@ module.exports = function(app) {
 
     res.render('index', {
       directives: [App, ServerOnlyApp], // [App, Title],
+      platformProviders: [
+        ng2Core.provide(ng2Universal.ORIGIN_URL, { useValue: config.rootUrl }), // TODO: what does this do?
+        ng2Core.provide(ng2Universal.BASE_URL, { useValue: baseUrl }),
+      ],
       providers: [
-        ng2Core.provide(ng2Router.APP_BASE_HREF, { useValue: baseUrl }),
         ng2Core.provide(ng2Universal.REQUEST_URL, { useValue: url }),
-        ng2Router.ROUTER_PROVIDERS,
-        ng2Universal.NODE_LOCATION_PROVIDERS,
+        ng2Universal.NODE_ROUTER_PROVIDERS,
+        ng2Universal.NODE_HTTP_PROVIDERS,
         // TODO: inject logger.id(req.session.logId). Need to research angular2 dairy.js too
       ],
-      preboot: true // note: when true client angular2 app will not start until prebootComplete is called
+      async: true, // TODO: what does this do?
+                     // note: when true client angular2 app will not start until prebootComplete is called
+      preboot: true  // { appRoot: 'app' } // your top level app component selector
     });
   }
 

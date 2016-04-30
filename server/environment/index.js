@@ -20,6 +20,13 @@ var all = {
   // Server IP
   ip: process.env.IP || '0.0.0.0',
 
+  // Configuring application public DNS URL
+  // Usually this is the load balancer or reverse proxy where SSL is terminated for this app.
+  // This typically has the form: "https://<host>[/<root path>]"
+  //
+  // TODO: when not explicitly provided determine this dynamically using reverse DNS
+  rootUrl: process.env.ROOT_URL || 'http://localhost:9000',
+
   // build version and time, provided by Gruntfile.js and config/express.js
   appConfig: {},
 
