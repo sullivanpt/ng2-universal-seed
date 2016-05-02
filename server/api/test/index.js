@@ -21,6 +21,10 @@ router.get('/authorize', // TODO: delete this route when user model implemented
 
 router.get('/isauthorized',
   auth.isAuthorized,
-  function(req, res) { res.send({ success: true }); });
+  function (req, res) { res.send({ success: true }); });
+
+router.get('/timestamp', function (req, res) {
+  res.send({ time: Date.now() });
+});
 
 module.exports = router;
