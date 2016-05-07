@@ -1,8 +1,8 @@
 'use strict';
 
-const ng2Core = require('angular2/core');
-const ng2Router = require('angular2/router');
-const ng2Http = require('angular2/http');
+const ng2Core = require('@angular/core');
+const ng2Router = require('@angular/router-deprecated');
+const ng2Http = require('@angular/http');
 
 const Home = ng2Core
   .Component({

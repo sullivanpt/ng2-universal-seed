@@ -20,10 +20,6 @@ Goals:
 
 * `npm install`
 
-Warning, first install of preboot will fail. Rerun npm install again.
-(this is also why we have a 'typings' dependency even though we don't use typescript).
-See https://github.com/angular/universal/pull/380
-
 ## Serve
 
 * `gulp serve` to build your client app and start a web server

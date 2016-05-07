@@ -1,6 +1,6 @@
 'use strict';
 
-const ng2Core = require('angular2/core');
+const ng2Core = require('@angular/core');
 
 module.exports = ng2Core
   .Component({

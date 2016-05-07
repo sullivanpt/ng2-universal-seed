@@ -10,7 +10,6 @@ const auth = require('../auth');
 // Angular 2
 require('angular2-universal/polyfills');
 const ng2Universal = require('angular2-universal');
-const ng2Core = require('angular2/core');
 
 // Application
 const App = require(path.join(publicRoot, 'app/app'));
@@ -23,7 +22,7 @@ const ServerOnlyApp = require(path.join(publicRoot, 'server-only-app/server-only
  */
 module.exports = function(app) {
   // TODO: is this necessary on server, should we not do this in 'development' mode?
-  ng2Core.enableProdMode();
+  ng2Universal.enableProdMode();
 
   // Angular 2 Express View Engine
   app.engine('.html', ng2Universal.expressEngine);
@@ -41,18 +40,20 @@ module.exports = function(app) {
     res.render('index', {
       directives: [App, ServerOnlyApp], // [App, Title],
       platformProviders: [
-        ng2Core.provide(ng2Universal.ORIGIN_URL, { useValue: config.rootUrl }), // TODO: what does this do?
-        ng2Core.provide(ng2Universal.BASE_URL, { useValue: baseUrl }),
+        ng2Universal.provide(ng2Universal.ORIGIN_URL, { useValue: config.rootUrl }), // TODO: what does this do?
+        ng2Universal.provide(ng2Universal.BASE_URL, { useValue: baseUrl }),
       ],
       providers: [
-        ng2Core.provide(ng2Universal.REQUEST_URL, { useValue: url }),
+        ng2Universal.provide(ng2Universal.REQUEST_URL, { useValue: url }),
         ng2Universal.NODE_ROUTER_PROVIDERS,
         ng2Universal.NODE_HTTP_PROVIDERS,
         // TODO: inject logger.id(req.session.logId). Need to research angular2 dairy.js too
       ],
-      async: true, // TODO: what does this do?
-                     // note: when true client angular2 app will not start until prebootComplete is called
-      preboot: true  // { appRoot: 'app' } // your top level app component selector
+      async: true,
+      preboot: { // note: when truthy client angular2 app will not start until prebootComplete is called
+        debug: true, // TODO: preboot currently not working, load is called after complete
+        uglify: false
+      }
     });
   }
 
