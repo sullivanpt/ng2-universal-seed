@@ -10,8 +10,11 @@ const auth = require('../auth');
 // Angular 2
 require('angular2-universal/polyfills');
 const ng2Universal = require('angular2-universal');
+const ng2Common = require('@angular/common');
+const ng2Router = require('@angular/router');
 
 // Application
+const routes = require(path.join(publicRoot, 'routes'));
 const App = require(path.join(publicRoot, 'app/app'));
 const ServerOnlyApp = require(path.join(publicRoot, 'server-only-app/server-only-app'));
 // TODO: for better SEO. import {Title} from './server-only-app/server-only-app';
@@ -40,13 +43,14 @@ module.exports = function(app) {
     res.render('index', {
       directives: [App, ServerOnlyApp], // [App, Title],
       platformProviders: [
-        ng2Universal.provide(ng2Universal.ORIGIN_URL, { useValue: config.rootUrl }), // TODO: what does this do?
-        ng2Universal.provide(ng2Universal.BASE_URL, { useValue: baseUrl }),
+        { provide: ng2Universal.ORIGIN_URL, useValue: config.rootUrl }, // TODO: what does this do?
+        { provide: ng2Common.APP_BASE_HREF, useValue: baseUrl },
       ],
       providers: [
-        ng2Universal.provide(ng2Universal.REQUEST_URL, { useValue: url }),
-        ng2Universal.NODE_ROUTER_PROVIDERS,
+        { provide: ng2Universal.REQUEST_URL, useValue: url },
         ng2Universal.NODE_HTTP_PROVIDERS,
+        ng2Router.provideRouter(routes),
+        ng2Universal.NODE_LOCATION_PROVIDERS,
         // TODO: inject logger.id(req.session.logId). Need to research angular2 dairy.js too
       ],
       async: true,

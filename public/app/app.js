@@ -1,43 +1,10 @@
 'use strict';
 
 const ng2Core = require('@angular/core');
-const ng2Router = require('@angular/router-deprecated');
+const ng2Router = require('@angular/router');
 const ng2Http = require('@angular/http');
 
-const Home = ng2Core
-  .Component({
-    selector: 'home',
-    template: 'Home Route'
-  })
-  .Class({
-    constructor: function () {}
-  });
-
-const About = ng2Core
-  .Component({
-    selector: 'about',
-    template: 'About Route'
-  })
-  .Class({
-    constructor: function () {}
-  });
-
-const Nested = ng2Core
-  .Component({
-    selector: 'nested',
-    template: 'Nested Route'
-  })
-  .Class({
-    constructor: function () {}
-  });
-
-module.exports = ng2Router.RouteConfig([ // TODO: semantics seem akward, source http://www.codeproject.com/Articles/1078872/Angular-RouteConfig-with-ES-and-ES
-    { path: '/', component: Home, name: 'Home', useAsDefault: true },
-    { path: '/home', component: Home, name: 'Home' },
-    { path: '/about', component: About, name: 'About' },
-    { path: '/about/nested', component: Nested, name: 'Nested' },
-    // instead of this default route we want 404 { path: '/**', redirectTo: ['Home'] }
-])(ng2Core
+module.exports = ng2Core
   .Component({
     selector: 'app',
     directives: [
@@ -52,9 +19,9 @@ module.exports = ng2Router.RouteConfig([ // TODO: semantics seem akward, source 
     <button (click)="apiTest()">API Test</button>
     <hr>
     <nav>
-      <a [routerLink]=" ['./Home'] ">Home</a>
-      <a [routerLink]=" ['./About'] ">About</a>
-      <a [routerLink]=" ['./Nested'] ">Nested</a>
+      <a [routerLink]="['./home']" [routerLinkActive]="['active']">Home</a>
+      <a [routerLink]="['./about']" [routerLinkActive]="['active']">About</a>
+      <a [routerLink]="['./about/nested']" [routerLinkActive]="['active']">Nested</a>
     </nav>
     <main>
       <router-outlet></router-outlet>
@@ -80,4 +47,4 @@ module.exports = ng2Router.RouteConfig([ // TODO: semantics seem akward, source 
           this.apiData = res.json();
         });
     }
-  }));
+  });

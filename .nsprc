@@ -1,0 +1,4 @@
+{
+  // See https://github.com/gulpjs/gulp/issues/1571
+  "exceptions": ["https://nodesecurity.io/advisories/118"]
+}

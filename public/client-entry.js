@@ -6,13 +6,21 @@
 // Angular 2
 require('angular2-universal/polyfills');
 const ng2Universal = require('angular2-universal');
+const ng2PlatformBrowserDynamic = require('@angular/platform-browser-dynamic');
+const ng2Http = require('@angular/http');
+const ng2Router = require('@angular/router');
 
 // Application
-const AppComponent = require('./app/app');
+const App = require('./app/app');
+const routes = require('./routes');
 
-// ng2Universal.enableProdMode(); // TODO: when do we need to enable this?
+// ng2Core/ng2Universal.enableProdMode(); // TODO: when do we need to enable this?
 
-ng2Universal.bootstrap(AppComponent, [
-  ...ng2Universal.BROWSER_ROUTER_PROVIDERS,
-  ...ng2Universal.BROWSER_HTTP_PROVIDERS,
-]); // embedded call to prebootComplete happens here
+// on document ready bootstrap Angular 2
+document.addEventListener('DOMContentLoaded', function ngApp() {
+  ng2PlatformBrowserDynamic.bootstrap(App, [
+    ng2Http.HTTP_PROVIDERS,
+    ng2Router.provideRouter(routes)
+  ])
+    .then(ng2Universal.prebootComplete);
+});
