@@ -18,6 +18,7 @@ Goals:
 
 ## Installation
 
+Tested with node 6.5.0 and npm 3.10.3 (aside: npm 3 is required for most angular2 dependencies).
 * `npm install`
 
 ## Serve

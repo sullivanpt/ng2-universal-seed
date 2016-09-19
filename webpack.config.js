@@ -1,7 +1,6 @@
 'use strict';
 
 var webpackMerge = require('webpack-merge');
-var webpack = require('webpack');
 var path = require('path');
 
 var commonConfig = {
@@ -20,9 +19,7 @@ var commonConfig = {
       },
     ]
   },
-  plugins: [
-    new webpack.optimize.OccurenceOrderPlugin(true)
-  ]
+  plugins: []
 };
 
 var clientConfig = {

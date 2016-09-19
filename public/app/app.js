@@ -1,15 +1,11 @@
 'use strict';
 
 const ng2Core = require('@angular/core');
-const ng2Router = require('@angular/router');
 const ng2Http = require('@angular/http');
 
 module.exports = ng2Core
   .Component({
     selector: 'app',
-    directives: [
-      ng2Router.ROUTER_DIRECTIVES,
-    ],
     template: `
     <h1>Client &amp; Server App</h1>
     <div>Hello {{name}}</div>
