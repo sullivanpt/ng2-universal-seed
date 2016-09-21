@@ -2,7 +2,8 @@
 
 const gulp = require('gulp');
 const plugins = require('gulp-load-plugins')();
-const webpack = require('webpack-stream');
+// const webpack = require('webpack-stream'); // TODO: seems not to work with mutiple output bundles
+const webpack = require('webpack');
 const del = require('del');
 const gitDescribe = require('git-describe');
 const fs = require('fs');
@@ -46,7 +47,7 @@ gulp.task('lint', function() { // webpack eslint-loader wouldn't get full covera
 // See https://github.com/karma-runner/gulp-karma
 // And https://github.com/AngularClass/angular2-webpack-starter/blob/master/config/spec-bundle.js
 
-gulp.task('test', function() {
+gulp.task('test', ['webpack'], function() { // TODO: only webpack server assets for server test, or load app directly
   process.env.NODE_ENV = 'test';
   return gulp.src(['**/*.spec.js', '!node_modules/**'])
     // gulp-jasmine needs filepaths so you can't have any plugins before it
@@ -57,10 +58,22 @@ gulp.task('test', function() {
 // TODO: 'gulp-protractor' on spec/e2e folder
 // See https://github.com/angular-fullstack/generator-angular-fullstack/blob/master/app/templates/gulpfile.babel(gulp).js
 
-gulp.task('webpack', ['clean', 'lint'], () => { // TODO: we don't really want to clean every time
+gulp.task('webpack', ['clean', 'lint'], (callback) => { // TODO: we don't really want to clean every time
+  // run webpack
+  webpack(require('./webpack.config.js'), function (err, stats) {
+    if (err) return callback(err);
+    console.log('[webpack]', stats.toString({
+      // output options
+      chunks: false
+    }));
+    callback();
+  });
+  /*
+// TODO: seems not to work with mutiple output bundles
   return gulp.src('public/client-entry.js')
     .pipe(webpack(require('./webpack.config.js')))
     .pipe(gulp.dest('.tmp/public'));
+  */
 });
 
 gulp.task('watch', ['version'], () => { // TODO: use http://webpack.github.io/docs/webpack-dev-middleware.html

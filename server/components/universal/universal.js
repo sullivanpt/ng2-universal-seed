@@ -1,6 +1,7 @@
 'use strict';
 
 const path = require('path');
+const fs = require('fs');
 const config = require('../../environment');
 const logger = require('../logs').getLogger('universal');
 const publicRoot = path.join(config.root, 'public');
@@ -13,7 +14,22 @@ const ng2Core = require('@angular/core');
 const ng2ExpressEngine = require('angular2-express-engine');
 
 // Application
-const ModuleServer = require(path.join(publicRoot, 'module-server'));
+// Notice in order to have our webpack asset pipeline for HTML, and CSS applied server side we
+// load the bundled form of 'module-server'.
+// this is bundled equivalent of require(path.join(publicRoot, 'module-server'));
+//
+// Alternatively we could have bundled the entire server side application, but bundled code is
+// inherently more complex and harder to debug.  Bundling only the server side client app makes a
+// nice compromise.
+//
+// for config.env === 'production' load from require(path.join(config.root, 'server/bundle.js'));
+const ModuleServer = (() => {
+  var bundlePath = path.join(config.root, '.tmp/server/bundle.js');
+  if (!fs.existsSync(bundlePath)) {
+    bundlePath = path.join(config.root, 'server/bundle.js');
+  }
+  return require(bundlePath);
+})();
 
 /**
  * This function registers the view engine and routes for server side angular2 renders.

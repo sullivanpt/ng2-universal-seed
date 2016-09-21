@@ -6,23 +6,7 @@ const ng2Http = require('@angular/http');
 module.exports = ng2Core
   .Component({
     selector: 'app',
-    template: `
-    <h1>Client &amp; Server App</h1>
-    <div>Hello {{name}}</div>
-    <input type="text" [value]="name" (input)="name = $event.target.value" autofocus>
-    <hr>
-    <pre>{{ apiData | json }}</pre>
-    <button (click)="apiTest()">API Test</button>
-    <hr>
-    <nav>
-      <a [routerLink]="['./home']" [routerLinkActive]="['active']">Home</a>
-      <a [routerLink]="['./about']" [routerLinkActive]="['active']">About</a>
-      <a [routerLink]="['./about/nested']" [routerLinkActive]="['active']">Nested</a>
-    </nav>
-    <main>
-      <router-outlet></router-outlet>
-    </main>
-    `
+    templateUrl: 'app.html'
   })
   .Class({
     constructor: [ng2Http.Http, function(http) {
